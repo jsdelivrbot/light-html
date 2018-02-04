@@ -10,13 +10,13 @@ class Component extends HTMLElement {
     this.render();
   }
 
-render() {
-  let testDom = document.createElement("div");
-      testDom.innerHTML = `<span>te</span>
+  render() {
+    let testDom = document.createElement("div");
+    testDom.innerHTML = `<span>te</span>
                            <span>pask</span>
                            <span>sitt</span>`;
-  let value = "pask"
-  let body = html`<div>
+    let value = "juurvili";
+    let body = html`<div>
                     <h3>Tere</h3>
                     <span>Pask</span>
                   </div>
@@ -26,8 +26,7 @@ render() {
                     ${testDom}
                   </div>
                   `;
-    console.log(body)              
-}
+  }
 }
 
 customElements.define("test-html", Component);

@@ -4,17 +4,29 @@ String.prototype.html = function() {
   return doc.body.children;
 };
 
-
-
 class HTML {
   constructor(strings, ...values) {
     this.strings = strings;
     this.values = [...values];
     this.dom = this.parseHTML();
+
+    this.render = this.render.bind(this);
+  }
+
+  render(container) {
+    const template = document.createElement("template");
+
+    for (let element in this.dom) {
+      let elementNode = this.dom[element];
+
+      if (elementNode.nodeType == 1) {
+        template.appendChild(elementNode);
+      }
+    }
   }
 
   parseHTML() {
-    let {values, strings} = this;
+    let { values, strings } = this;
 
     let domifyStrings = strings.reduce((previous, current, index) => {
       let html, element;
@@ -26,7 +38,7 @@ class HTML {
 
       if (value) {
         lastChild = html[html.length - 1];
-        if(value.nodeType !== 1) {
+        if (value.nodeType !== 1) {
           lastChild.removeChild(
             lastChild.childNodes[lastChild.childNodes.length - 1]
           );
@@ -41,16 +53,16 @@ class HTML {
       }
 
       if (lastChild) {
-         lastChild.appendChild(element.length > 0 ? element[0] : element);
+        lastChild.appendChild(element.length > 0 ? element[0] : element);
       }
 
       return html;
     });
+
     return domifyStrings;
   }
-  
 }
 
 export default function html(strings, ...values) {
-  return new HTML(strings, ...values)
+  return new HTML(strings, ...values);
 }
