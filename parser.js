@@ -14,13 +14,11 @@ class HTML {
   }
 
   render(container) {
-    const template = document.createElement("template");
-
-    for (let element in this.dom) {
-      let elementNode = this.dom[element];
-
+    let domElements = this.dom;
+    for (let element in domElements) {
+      let elementNode = domElements[element];
       if (elementNode.nodeType == 1) {
-        template.appendChild(elementNode);
+        container.appendChild(elementNode);
       }
     }
   }
@@ -29,12 +27,12 @@ class HTML {
     let { values, strings } = this;
 
     let domifyStrings = strings.reduce((previous, current, index) => {
-      let html, element;
-      let value = values[index - (strings.length - 2)];
+
+      let html, element, value = values[index - (strings.length - 2)];
+      let lastChild = null;
 
       html = typeof previous == "string" ? previous.html() : previous;
 
-      let lastChild = null;
 
       if (value) {
         lastChild = html[html.length - 1];
