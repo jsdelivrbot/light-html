@@ -1,5 +1,4 @@
 import html from "./parser.js";
-import html2 from "./parser2.js";
 
 class Component extends HTMLElement {
   constructor() {
