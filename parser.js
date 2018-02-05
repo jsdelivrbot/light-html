@@ -21,28 +21,29 @@ class HTML {
 
 
   replaceTemplatesWithValues(template, values) {
-    for ( let value of values) {
-      let id = value[0], entry = value[1];
-      console.log(id, entry)
-      // let temp = template.querySelector(`#${id}`);
-      //
-      // if(entry.nodeType == 1) {
-      //   template.replaceChild(template, entry);
-      // } else if (typeof entry == "string") {
-      //   console.log(temp)
-      // }
+    for ( let entry of values) {
+      let id = entry.id, value = entry.value;
+
+      let temp = template.querySelector(`#${id}`);
+
+      if(entry.nodeType == 1) {
+        template.replaceChild(temp, value);
+      } else if (typeof value == "string") {
+        temp.parentNode.innerHTML = value;
+      }
     }
+    return template;
   }
 
   parseHTML() {
     let { values, strings } = this;
-    let valuesMap = new Map();
+    let valuesMap = [];
 
     let templateDom = strings
       .map((string, index) => {
         let id = UUID();
         if((index + 1) != strings.length) {
-           valuesMap.set(id, values[index]);
+           valuesMap.push({id, value:values[index]});
            string = `${string} <template id=${id}> </template>`
         }
         return string;
@@ -50,7 +51,7 @@ class HTML {
       .reduce((prev, current) => prev + current)
       .html();
 
-      this.replaceTemplatesWithValues(templateDom, valuesMap);
+      return this.replaceTemplatesWithValues(templateDom, valuesMap);
   }
 }
 

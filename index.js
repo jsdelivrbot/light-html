@@ -8,6 +8,7 @@ class Component extends HTMLElement {
   connectedCallback() {
     this.render();
   }
+
   log() {
     console.log('works')
   }
@@ -25,7 +26,7 @@ class Component extends HTMLElement {
                          </section>
                        </div>`;
 
-      console.log(testDom)
+      testDom.render(this);
     // let body = html`<div>
     //                   <div>
     //                     <h3>Tere</h3>
