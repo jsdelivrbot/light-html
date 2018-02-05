@@ -19,25 +19,38 @@ class HTML {
     container.appendChild(domElements);
   }
 
+
+  replaceTemplatesWithValues(template, values) {
+    for ( let value of values) {
+      let id = value[0], entry = value[1];
+      console.log(id, entry)
+      // let temp = template.querySelector(`#${id}`);
+      //
+      // if(entry.nodeType == 1) {
+      //   template.replaceChild(template, entry);
+      // } else if (typeof entry == "string") {
+      //   console.log(temp)
+      // }
+    }
+  }
+
   parseHTML() {
     let { values, strings } = this;
     let valuesMap = new Map();
 
-    let newStrings = strings
+    let templateDom = strings
       .map((string, index) => {
         let id = UUID();
-        valuesMap.set(id, values[index]);
-        let newString =
-          index + 1 == strings.length
-            ? string
-            : `${string} <template id=${id}> </template>`;
-        return newString;
+        if((index + 1) != strings.length) {
+           valuesMap.set(id, values[index]);
+           string = `${string} <template id=${id}> </template>`
+        }
+        return string;
       })
-      .reduce((prev, current) => {
-        return prev + current;
-      });
+      .reduce((prev, current) => prev + current)
+      .html();
 
-      console.log(newStrings.html())
+      this.replaceTemplatesWithValues(templateDom, valuesMap);
   }
 }
 

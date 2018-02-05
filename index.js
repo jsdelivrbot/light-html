@@ -15,7 +15,7 @@ class Component extends HTMLElement {
   render() {
     let value = "juurvili";
     let testDom = html`<div>
-                        <span onclick="${this.log}">te</span>
+                        <span>te</span>
                          <span>pask</span>
                          <section id="test">
                            <span>${value}</span>
