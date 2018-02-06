@@ -23,13 +23,17 @@ class HTML {
   replaceTemplatesWithValues(template, values) {
     for ( let entry of values) {
       let id = entry.id, value = entry.value;
+      let container = template.parentNode.querySelector(`*[data-selector=${id}]`);
 
-      let temp = template.querySelector(`#${id}`);
-
-      if(entry.nodeType == 1) {
-        template.replaceChild(temp, value);
-      } else if (typeof value == "string") {
-        temp.parentNode.innerHTML = value;
+      if(value.nodeType == 1) {
+        let parent = container.parentNode;
+        parent.removeChild(container);
+        parent.appendChild(value);
+      } else if (typeof value === "string") {
+        container.parentNode.innerHTML = value;
+      } else if(typeof value === "function") {
+        const eventType = "click";
+        container.addEventListener(eventType, value);
       }
     }
     return template;
@@ -42,9 +46,15 @@ class HTML {
     let templateDom = strings
       .map((string, index) => {
         let id = UUID();
+
         if((index + 1) != strings.length) {
-           valuesMap.push({id, value:values[index]});
-           string = `${string} <template id=${id}> </template>`
+          if(string.indexOf("onclick") > -1) {
+            string = `${string}" data-selector=${id} data-="`;
+            valuesMap.push({id, value:values[index]});
+          } else {
+            valuesMap.push({id, value:values[index]});
+            string = `${string} <template data-selector=${id}> </template>`
+          }
         }
         return string;
       })

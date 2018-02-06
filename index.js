@@ -10,37 +10,30 @@ class Component extends HTMLElement {
   }
 
   log() {
-    console.log('works')
+    console.log("works")
   }
 
   render() {
-    let value = "juurvili";
-    let testDom = html`<div>
-                        <span>te</span>
-                         <span>pask</span>
-                         <section id="test">
-                           <span>${value}</span>
-                          <div id="test2">
-                            <p>${value}</p>
-                          </div>
-                         </section>
-                       </div>`;
+    let value = "random";
 
-      testDom.render(this);
-    // let body = html`<div>
-    //                   <div>
-    //                     <h3>Tere</h3>
-    //                     <span>Pask</span>
-    //                   </div>
-    //                     <div id="test">
-    //                       <h3>test</h3>
-    //                       <span>${value}</span>
-    //                       ${testDom.dom}
-    //                     </div>
-    //                   </div>
-    //                 `;
-    //
-    //     body.render(this);
+    let innerContainer = html`
+                              <div id="inner">
+                                <span>${value}</span>
+                                <span>${value}</span>
+                                <span>${value}</span>
+                              </div>
+                              `;
+    let link = html`<a href="">LINK</a>`;
+        link.onclick = this.log;
+
+    let container = html`<section onclick="${this.log}" id="container">
+                            <div class="element">${value}</div>
+                            ${link.dom}
+                            ${innerContainer.dom}
+                        </section>
+                        `
+      console.log(container)
+      container.render(this);
   }
 }
 
