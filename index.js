@@ -10,7 +10,11 @@ class Component extends HTMLElement {
   }
 
   log() {
-    console.log("works")
+    console.log("shit")
+  }
+
+  mouseOver() {
+    console.log("mouseOver")
   }
 
   render() {
@@ -26,9 +30,8 @@ class Component extends HTMLElement {
     let link = html`<a href="">LINK</a>`;
         link.onclick = this.log;
 
-    let container = html`<section onclick="${this.log}" id="container">
+    let container = html`<section onmouseover="${this.mouseOver}" onclick="${this.log}" id="container">
                             <div class="element">${value}</div>
-                            ${link.dom}
                             ${innerContainer.dom}
                         </section>
                         `
