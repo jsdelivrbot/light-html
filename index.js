@@ -27,17 +27,20 @@ class Component extends HTMLElement {
                                 <span>${value}</span>
                               </div>
                               `;
-    let link = html`<a href="">LINK</a>`;
-        link.onclick = this.log;
 
     let container = html`<section onmouseover="${this.mouseOver}" onclick="${this.log}" id="container">
                             <div class="element">${value}</div>
                             ${innerContainer.dom}
                         </section>
                         `
-      console.log(container)
+
       container.render(this);
+
+      value = "sitarada";
+
+      innerContainer.remove();
   }
 }
+
 
 customElements.define("test-html", Component);

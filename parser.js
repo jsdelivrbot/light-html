@@ -1,16 +1,12 @@
 import { UUID } from "../helpers/math.js";
+import { eventsList } from "../helpers/constants.js";
+import "../helpers/parser.js"
 
-String.prototype.html = function() {
-  let parser = new DOMParser();
-  let doc = parser.parseFromString(this, "text/html");
-  return doc.body.children[0];
-};
 
 class HTML {
   constructor(strings, ...values) {
-    this.strings = strings;
     this.values = [...values];
-    this.dom = this.parseHTML();
+    this.dom = this.parseHTML(strings);
     this.render = this.render.bind(this);
   }
 
@@ -19,13 +15,16 @@ class HTML {
     container.appendChild(domElements);
   }
 
+  remove() {
+    this.dom.remove();
+  }
+
   replaceTemplatesWithValues(template, values) {
     for (let entry of values) {
       let id = entry.id,
-          value = entry.value;
+        value = entry.value;
 
-      let container = template.parentNode.querySelector(`*[selector-${id}]`);
-
+      let container = template.parentNode.querySelector(`*[id-${id}]`);
       if (value.nodeType == 1) {
         let parent = container.parentNode;
         parent.removeChild(container);
@@ -41,31 +40,22 @@ class HTML {
   }
 
   checkClickEvents(string) {
-    const eventsList = [
-      "click",
-      "dblclick",
-      "mousedown",
-      "mouseenter",
-      "mouseleave",
-      "mousemove",
-      "mouseover",
-      "mouseout",
-      "mouseup"
-    ];
-    let checkForEvents = eventsList.map(event => {
-      let result = string.search(event);
-      if (result > 0) {
-        return event;
-      } else {
-        return null;
-      }
-    }).filter(result => result)[0];
+    let checkForEvents = eventsList
+      .map(event => {
+        let result = string.search(event);
+        if (result > 0) {
+          return event;
+        } else {
+          return null;
+        }
+      })
+      .filter(result => result)[0];
 
     return checkForEvents ? checkForEvents : false;
   }
 
-  parseHTML() {
-    let { values, strings } = this;
+  parseHTML(strings) {
+    let { values } = this;
     let valuesMap = [];
 
     let templateDom = strings
@@ -74,11 +64,11 @@ class HTML {
         if (index + 1 != strings.length) {
           let clickEvent = this.checkClickEvents(string);
           if (clickEvent) {
-            string = `${string}" selector-${id} "`;
+            string = `${string}" id-${id} "`;
             valuesMap.push({ id, value: values[index], type: clickEvent });
           } else {
             valuesMap.push({ id, value: values[index] });
-            string = `${string} <template selector-${id}> </template>`;
+            string = `${string} <template id-${id}> </template>`;
           }
         }
         return string;
