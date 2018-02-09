@@ -1,11 +1,10 @@
 import { UUID } from "../helpers/math.js";
 import { eventsList } from "../helpers/constants.js";
-import "../helpers/parser.js"
-
+import "../helpers/parser.js";
 
 class HTML {
-  constructor(strings, ...values) {
-    this.values = [...values];
+  constructor(strings, values) {
+    this.values = values;
     this.dom = this.parseHTML(strings);
     this.render = this.render.bind(this);
   }
@@ -25,6 +24,7 @@ class HTML {
         value = entry.value;
 
       let container = template.parentNode.querySelector(`*[id-${id}]`);
+
       if (value.nodeType == 1) {
         let parent = container.parentNode;
         parent.removeChild(container);
@@ -81,5 +81,6 @@ class HTML {
 }
 
 export default function html(strings, ...values) {
-  return new HTML(strings, ...values);
+  let valuesArray = [...values];
+  return new HTML(strings, valuesArray);
 }
