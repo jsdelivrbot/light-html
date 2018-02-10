@@ -26,9 +26,7 @@ class HTML {
       let container = template.parentNode.querySelector(`*[id-${id}]`);
 
       if (value.nodeType == 1) {
-        let parent = container.parentNode;
-        parent.removeChild(container);
-        parent.appendChild(value);
+        container.replaceWith(value);
       } else if (typeof value === "string") {
         container.parentNode.innerHTML = value;
       } else if (typeof value === "function") {

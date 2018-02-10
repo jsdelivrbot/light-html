@@ -1,5 +1,5 @@
 const SVG_TAGS = [
-  'altGlyph', 'altGlyphDef', 'altGlyphItem', 'animate', 'animateColor',
+  'svg', 'altGlyph', 'altGlyphDef', 'altGlyphItem', 'animate', 'animateColor',
   'animateMotion', 'animateTransform', 'circle', 'clipPath', 'color-profile',
   'cursor', 'defs', 'desc', 'ellipse', 'feBlend', 'feColorMatrix',
   'feComponentTransfer', 'feComposite', 'feConvolveMatrix',
@@ -18,11 +18,11 @@ const SVG_TAGS = [
 
 {
   String.prototype.html = function() {
-    const svgCheck = SVG_TAGS.map(tag => this.search(`</${tag}>`)).filter(output => output > -1).lenght > 0 ? true : false;
+    const svgCheck = SVG_TAGS.map(tag => this.search(`</${tag}>`)).filter(output => output > -1).length > 0 ? true : false;
     const parserType = svgCheck ? "image/svg+xml" : "text/html";
 
     let parser = new DOMParser();
     let doc = parser.parseFromString(this, parserType);
-    return svgCheck ? doc : doc.body.children[0];
+    return svgCheck ? doc.documentElement : doc.body.firstChild;
   };
 }
