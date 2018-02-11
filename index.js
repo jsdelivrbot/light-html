@@ -1,68 +1,86 @@
-import html from "./parser.js";
+import { UUID } from "./helpers/math.js";
+import { eventsList } from "./helpers/constants.js";
+import "./helpers/parser.js";
 
-class Component extends HTMLElement {
-  constructor() {
-    super();
+class HTML {
+  constructor(strings, values) {
+    this.values = values;
+    this.dom = this.parseHTML(strings);
+    this.render = this.render.bind(this);
   }
 
-  connectedCallback() {
-    this.render();
+  render(container) {
+    let domElements = this.dom;
+    container.appendChild(domElements);
   }
 
-  log() {
-    console.log("click event");
+  remove() {
+    this.dom.remove();
   }
 
-  mouseOver() {
-    console.log("mouseOver");
+  replaceTemplatesWithValues(template, values) {
+    for (let entry of values) {
+      let id = entry.id,
+        value = entry.value;
+
+      let container = template.parentNode.querySelector(`*[data-${id}]`);
+
+      if (value.nodeType == 1) {
+        container.replaceWith(value);
+      } else if (typeof value === "string") {
+        container.parentNode.innerHTML = value;
+      } else if (typeof value === "function") {
+        const eventType = entry.type;
+        container.addEventListener(eventType, value);
+      }
+    }
+    return template;
   }
 
-  render() {
-    const apples = html`<g xmlns="http://www.w3.org/2000/svg" class="bar">
-                          <rect width="40" height="19"></rect>
-                          <text x="45" y="9.5" dy=".35em">4 apples</text>
-                        </g>`;
+  checkClickEvents(string) {
+    let checkForEvents = eventsList
+      .map(event => {
+        let result = string.search(event);
+        if (result > 0) {
+          return event;
+        } else {
+          return null;
+        }
+      })
+      .filter(result => result)[0];
 
-    const svg = html`<svg xmlns="http://www.w3.org/2000/svg" class="chart" width="420" height="150" aria-labelledby="title desc" role="img">
-                        <title id="title">A bar chart showing information</title>
-                        <desc id="desc">4 apples; 8 bananas; 15 kiwis; 16 oranges; 23 lemons</desc>
-                        <g class="bar">
-                          <rect width="80" height="19" y="20"></rect>
-                          <text x="85" y="28" dy=".35em">8 bananas</text>
-                        </g>
-                        ${apples.dom}
-                        <g class="bar">
-                          <rect width="150" height="19" y="40"></rect>
-                          <text x="150" y="48" dy=".35em">15 kiwis</text>
-                        </g>
-                        <g class="bar">
-                          <rect width="160" height="19" y="60"></rect>
-                          <text x="161" y="68" dy=".35em">16 oranges</text>
-                        </g>
-                        <g class="bar">
-                          <rect width="230" height="19" y="80"></rect>
-                          <text x="235" y="88" dy=".35em">23 lemons</text>
-                        </g>
-                      </svg>`;
+    return checkForEvents ? checkForEvents : false;
+  }
 
+  parseHTML(strings) {
+    let { values } = this;
+    let valuesMap = [];
 
-    let value = "random";
-    let innerContainer = html`
-                              <div id="inner">
-                                <span>${value}</span>
-                                <span>${value}</span>
-                                <span>${value}</span>
-                              </div>
-                              `;
+    let rawTemplate = strings
+      .map((string, index) => {
+        let id = UUID();
 
-    let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
-                            <div class="element">${value}</div>
-                            ${innerContainer.dom}
-                        </section>`;
+        //Skip last string
+        if (index + 1 != strings.length) {
+          let clickEvent = this.checkClickEvents(string);
+          if (clickEvent) {
+            string = `${string}" data-${id}=""`;
+            valuesMap.push({ id, value: values[index], type: clickEvent });
+          } else {
+            valuesMap.push({ id, value: values[index] });
+            string = `${string} <template data-${id}="" > </template>`;
+          }
+        }
+        return string;
+      })
+      .reduce((prev, current) => prev + current)
+      .html();
 
-    svg.render(this);
-    container.render(this);
+    return this.replaceTemplatesWithValues(rawTemplate, valuesMap);
   }
 }
 
-customElements.define("test-html", Component);
+export default function html(strings, ...values) {
+  let valuesArray = [...values];
+  return new HTML(strings, valuesArray);
+}

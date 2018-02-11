@@ -1,0 +1,33 @@
+{
+  "name": "light-html",
+  "version": "1.0.0",
+  "description": "light dom creation library",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "build":"microbundle -f es -o ./build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonis2/light-html.git"
+  },
+  "keywords": [
+    "native",
+    "javascript",
+    "template",
+    "tags",
+    "dom"
+  ],
+  "author": "tonis",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tonis2/light-html/issues"
+  },
+  "homepage": "https://github.com/tonis2/light-html#readme",
+  "devDependencies": {
+    "microbundle": "^0.4.3"
+  }
+}
