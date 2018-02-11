@@ -23,6 +23,7 @@ const SVG_TAGS = [
 
     let parser = new DOMParser();
     let doc = parser.parseFromString(this, parserType);
+
     return svgCheck ? doc.documentElement : doc.body.firstChild;
   };
 }

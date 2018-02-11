@@ -18,7 +18,7 @@ class Component extends HTMLElement {
   }
 
   render() {
-    const apples = html`<g class="bar">
+    const apples = html`<g  xmlns="http://www.w3.org/2000/svg" class="bar">
                           <rect width="40" height="19"></rect>
                           <text x="45" y="9.5" dy=".35em">4 apples</text>
                         </g>`;
@@ -30,6 +30,7 @@ class Component extends HTMLElement {
                           <rect width="80" height="19" y="20"></rect>
                           <text x="85" y="28" dy=".35em">8 bananas</text>
                         </g>
+                        ${apples.dom}
                         <g class="bar">
                           <rect width="150" height="19" y="40"></rect>
                           <text x="150" y="48" dy=".35em">15 kiwis</text>
