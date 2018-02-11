@@ -36,7 +36,7 @@ let container = html`<section onclick="${this.click}" onmouseover="${this.mouseO
 container.render(document.body);                  
 ```                          
 
-See working example https://tonis2.github.io/light-html/docs/
+See working example https://tonis2.github.io/light-html/example/
 
 ### Why ?
 
