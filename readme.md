@@ -36,6 +36,8 @@ let container = html`<section onclick="${this.click}" onmouseover="${this.mouseO
 container.render(document.body);                  
 ```                          
 
+See working example https://tonis2.github.io/light-html/docs/
+
 ### Why ?
 
 I needed a light weight library to create all my html elements in javascript, and it should also support SVG, and would not be bloated with code and dependencies.
