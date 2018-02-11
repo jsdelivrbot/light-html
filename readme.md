@@ -6,7 +6,7 @@
 
 __Install__
 
-`npm i --save @tonis2/light-html`;
+`npm i -D tonis2/light-html`;
 
 
 __Register__
