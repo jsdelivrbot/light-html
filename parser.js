@@ -23,7 +23,7 @@ class HTML {
       let id = entry.id,
         value = entry.value;
 
-      let container = template.parentNode.querySelector(`*[data-id="${id}"]`);
+      let container = template.parentNode.querySelector(`*[data-${id}]`);
 
       if (value.nodeType == 1) {
         container.replaceWith(value);
@@ -62,17 +62,19 @@ class HTML {
         if (index + 1 != strings.length) {
           let clickEvent = this.checkClickEvents(string);
           if (clickEvent) {
-            string = `${string}" data-id="${id}" "`;
+            string = `${string}" data-${id}=''`;
+
             valuesMap.push({ id, value: values[index], type: clickEvent });
           } else {
             valuesMap.push({ id, value: values[index] });
-            string = `${string} <template data-id="${id}"> </template>`;
+            string = `${string} <template data-${id}="" > </template>`;
           }
         }
         return string;
       })
       .reduce((prev, current) => prev + current)
       .html();
+      console.log(templateDom)
 
     return this.replaceTemplatesWithValues(templateDom, valuesMap);
   }

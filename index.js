@@ -18,7 +18,7 @@ class Component extends HTMLElement {
   }
 
   render() {
-    const apples = html`<g  xmlns="http://www.w3.org/2000/svg" class="bar">
+    const apples = html`<g xmlns="http://www.w3.org/2000/svg" class="bar">
                           <rect width="40" height="19"></rect>
                           <text x="45" y="9.5" dy=".35em">4 apples</text>
                         </g>`;
@@ -50,12 +50,12 @@ class Component extends HTMLElement {
     let innerContainer = html`
                               <div id="inner">
                                 <span>${value}</span>
-                                <span onclick="${this.log}">${value}</span>
+                                <span>${value}</span>
                                 <span>${value}</span>
                               </div>
                               `;
 
-    let container = html`<section onmouseover="${this.mouseOver}"  id="container">
+    let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
                             <div class="element">${value}</div>
                             ${innerContainer.dom}
                         </section>`;
