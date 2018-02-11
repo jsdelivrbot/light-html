@@ -35,27 +35,17 @@ class Component extends HTMLElement {
                           <rect width="150" height="19" y="40"></rect>
                           <text x="150" y="48" dy=".35em">15 kiwis</text>
                         </g>
-                        <g class="bar">
-                          <rect width="160" height="19" y="60"></rect>
-                          <text x="161" y="68" dy=".35em">16 oranges</text>
-                        </g>
-                        <g class="bar">
-                          <rect width="230" height="19" y="80"></rect>
-                          <text x="235" y="88" dy=".35em">23 lemons</text>
-                        </g>
                       </svg>`;
 
-    let value = "random";
+    let values = ["data1", "data2", "data3"];
     let innerContainer = html`
                               <div id="inner">
-                                <span>${value}</span>
-                                <span>${value}</span>
-                                <span>${value}</span>
-                              </div>
-                              `;
+                                ${values.map((value) => {return `<span>${value}</span>`})}
+                              </div>`;
 
+    const randomValue = "test";
     let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
-                            <div class="element">${value}</div>
+                            <div class="element">${randomValue}</div>
                             ${innerContainer.dom}
                         </section>`;
 

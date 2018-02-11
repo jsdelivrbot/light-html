@@ -32,6 +32,12 @@ class HTML {
       } else if (typeof value === "function") {
         const eventType = entry.type;
         container.addEventListener(eventType, value);
+      } else if (Array.isArray(value)) {
+        let fragment = document.createDocumentFragment();
+        value.forEach(item => {
+          fragment.appendChild(item.html());
+        });
+        container.replaceWith(fragment);
       }
     }
     return template;
