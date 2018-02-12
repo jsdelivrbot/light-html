@@ -27,8 +27,6 @@ class HTML {
 
       if (value.nodeType == 1) {
         container.replaceWith(value);
-      } else if (typeof value === "string") {
-        container.parentNode.innerHTML = value;
       } else if (typeof value === "function") {
         const eventType = entry.type;
         container.addEventListener(eventType, value);
@@ -39,6 +37,8 @@ class HTML {
         });
         container.replaceWith(fragment);
       }
+
+      container.removeAttribute(`data-${id}`);
     }
     return template;
   }
@@ -64,17 +64,21 @@ class HTML {
 
     let rawTemplate = strings
       .map((string, index) => {
-        let id = UUID();
+        const id = UUID();
 
         //Skip last string
         if (index + 1 != strings.length) {
           let checkEvent = this.checkEvent(string);
           if (checkEvent) {
-            string = `${string}" data-${id}=""`;
+            string = `${string}" data-${id}="`;
             valuesMap.push({ id, value: values[index], type: checkEvent });
           } else {
-            valuesMap.push({ id, value: values[index] });
-            string = `${string} <template data-${id}="" > </template>`;
+            if (typeof values[index] == "string") {
+              string = `${string} ${values[index]}`;
+            } else {
+              valuesMap.push({ id, value: values[index] });
+              string = `${string} <template data-${id}=""> </template>`;
+            }
           }
         }
         return string;

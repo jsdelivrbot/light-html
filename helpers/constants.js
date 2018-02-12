@@ -7,8 +7,7 @@ export const eventsList = [
   "mousemove",
   "mouseover",
   "mouseout",
-  "mouseup",
-  "value"
+  "mouseup"
 ],
  SVG_TAGS = [
   'svg', 'altGlyph', 'altGlyphDef', 'altGlyphItem', 'animate', 'animateColor',

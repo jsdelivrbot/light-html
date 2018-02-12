@@ -46,6 +46,7 @@ class Component extends HTMLElement {
     const randomValue = "test";
     let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
                             <div class="element">${randomValue}</div>
+                            <input type="text" value="${randomValue}" > </input>
                             ${innerContainer.dom}
                         </section>`;
 
