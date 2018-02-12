@@ -10,7 +10,7 @@ __Install__
 
 
 __Register__
-```
+```js
 import html from "light-html";
 
 ```
