@@ -43,7 +43,7 @@ class HTML {
     return template;
   }
 
-  checkClickEvents(string) {
+  checkEvent(string) {
     let checkForEvents = eventsList
       .map(event => {
         let result = string.search(event);
@@ -68,10 +68,10 @@ class HTML {
 
         //Skip last string
         if (index + 1 != strings.length) {
-          let clickEvent = this.checkClickEvents(string);
-          if (clickEvent) {
+          let checkEvent = this.checkEvent(string);
+          if (checkEvent) {
             string = `${string}" data-${id}=""`;
-            valuesMap.push({ id, value: values[index], type: clickEvent });
+            valuesMap.push({ id, value: values[index], type: checkEvent });
           } else {
             valuesMap.push({ id, value: values[index] });
             string = `${string} <template data-${id}="" > </template>`;
