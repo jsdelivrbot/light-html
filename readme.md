@@ -17,7 +17,7 @@ import html from "light-html";
 
 __Example__
 
-```
+```js
 const apples = html`<g xmlns="http://www.w3.org/2000/svg" class="bar">
                       <rect width="40" height="19"></rect>
                       <text x="45" y="9.5" dy=".35em">4 apples</text>
