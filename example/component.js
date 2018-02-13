@@ -1,4 +1,4 @@
-import html from "./light-html.m.js";
+import html from "https://cdn.rawgit.com/tonis2/light-html/768e25f3/index.js";
 
 class Component extends HTMLElement {
   constructor() {
@@ -38,17 +38,16 @@ class Component extends HTMLElement {
                       </svg>`;
 
     let values = ["data1", "data2", "data3"];
-    let innerContainer = html`
-                              <div id="inner">
+    let innerContainer = html`<div id="inner">
                                 ${values.map((value) => {return `<span>${value}</span>`})}
                               </div>`;
 
     const randomValue = "test";
     let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
                             <div class="element">${randomValue}</div>
-                            <input type="text" value="${randomValue}" > </input>
+                            <input type="text" placeholder="${randomValue}" />
                             ${innerContainer.dom}
-                        </section>`;
+                         </section>`;
 
     svg.render(this);
     container.render(this);

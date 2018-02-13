@@ -33,7 +33,11 @@ class HTML {
       } else if (Array.isArray(value)) {
         let fragment = document.createDocumentFragment();
         value.forEach(item => {
-          fragment.appendChild(item.html());
+          if (!item.nodeType == 1) {
+            item = item.html();
+          } else {
+            fragment.appendChild(item);
+          }
         });
         container.replaceWith(fragment);
       }
