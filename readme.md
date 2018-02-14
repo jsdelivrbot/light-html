@@ -9,9 +9,22 @@ __Install__
 `npm i -D tonis2/light-html`;
 
 
+
+
+
+
 __Register__
+
+Import directly
+
 ```js
-import html from "light-html";
+import html from "https://cdn.rawgit.com/tonis2/light-html/e1497d71/index.js"
+```
+
+or with compiling
+
+```js
+import html from "light-html"
 
 ```
 
