@@ -1,4 +1,4 @@
-import html from "https://cdn.rawgit.com/tonis2/light-html/768e25f3/index.js";
+import html from "../index.js";
 
 class Component extends HTMLElement {
   constructor() {
@@ -15,6 +15,10 @@ class Component extends HTMLElement {
 
   mouseOver() {
     console.log("mouseOver");
+  }
+
+  rangeInput(event) {
+    console.log(event.target.value);
   }
 
   render() {
@@ -46,6 +50,7 @@ class Component extends HTMLElement {
     let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
                             <div class="element">${randomValue}</div>
                             <input type="text" placeholder="${randomValue}" />
+                            <input type="range" oninput="${this.rangeInput}" />
                             ${innerContainer.dom}
                          </section>`;
 
