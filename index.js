@@ -9,15 +9,18 @@ class HTML {
     this.render = this.render.bind(this);
   }
 
+  //Render dom to the website
   render(container) {
     let domElements = this.dom;
     container.appendChild(domElements);
   }
 
+ //Remove dom from the website
   remove() {
     this.dom.remove();
   }
 
+  //Put the values where they should be in raw dom.
   replaceTemplatesWithValues(template, values) {
     for (let entry of values) {
       let id = entry.id,
@@ -35,9 +38,8 @@ class HTML {
         value.forEach(item => {
           if (!item.nodeType == 1) {
             item = item.html();
-          } else {
-            fragment.appendChild(item);
           }
+          fragment.appendChild(item);
         });
         container.replaceWith(fragment);
       }
@@ -47,6 +49,7 @@ class HTML {
     return template;
   }
 
+  //Check if string contains click event, or default value.
   checkEvent(string) {
     let checkForEvents = eventsList
       .map(event => {
@@ -62,14 +65,14 @@ class HTML {
     return checkForEvents ? checkForEvents : false;
   }
 
+  //Make raw dom that has templates on places where values should be.
+  // After templates are added, go to next phase and replace templates with true values
   parseHTML(strings) {
     let { values } = this;
     let valuesMap = [];
-
-    let rawTemplate = strings
+    let rawDom = strings
       .map((string, index) => {
         const id = UUID();
-
         //Skip last string
         if (index + 1 != strings.length) {
           let checkEvent = this.checkEvent(string);
@@ -90,7 +93,12 @@ class HTML {
       .reduce((prev, current) => prev + current)
       .html();
 
-    return this.replaceTemplatesWithValues(rawTemplate, valuesMap);
+        console.log(rawDom)
+    //Replace the templates inside
+    let domWithValues = this.replaceTemplatesWithValues(rawDom, valuesMap);
+
+
+    return domWithValues
   }
 }
 

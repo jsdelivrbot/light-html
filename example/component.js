@@ -1,5 +1,6 @@
-import html from "https://cdn.jsdelivr.net/gh/tonis2/light-html/index.js";
+import html from "../index.js";
 
+//https://cdn.jsdelivr.net/gh/tonis2/light-html/index.js
 class Component extends HTMLElement {
   constructor() {
     super();
