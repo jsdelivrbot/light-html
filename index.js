@@ -92,8 +92,6 @@ class HTML {
       })
       .reduce((prev, current) => prev + current)
       .html();
-
-        console.log(rawDom)
     //Replace the templates inside
     let domWithValues = this.replaceTemplatesWithValues(rawDom, valuesMap);
 
