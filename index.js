@@ -5,17 +5,23 @@ import "./helpers/parser.js";
 class HTML {
   constructor(strings, values) {
     this.values = values;
-    this.dom = this.parseHTML(strings);
+    this.strings = strings;
+    this.dom = this.parseHTML();
     this.render = this.render.bind(this);
+    this.update = this.update.bind(this);
+    return this.dom;
   }
 
   //Render dom to the website
   render(container) {
-    let domElements = this.dom;
-    container.appendChild(domElements);
+    container.appendChild(this);
   }
 
- //Remove dom from the website
+  update() {
+    console.log(this);
+  }
+
+  //Remove dom from the website
   remove() {
     this.dom.remove();
   }
@@ -28,24 +34,29 @@ class HTML {
 
       let container = template.parentNode.querySelector(`*[data-${id}]`);
 
-      if (value.nodeType == 1) {
-        container.replaceWith(value);
-      } else if (typeof value === "function") {
-        const eventType = entry.type;
-        container.addEventListener(eventType, value);
-      } else if (Array.isArray(value)) {
-        let fragment = document.createDocumentFragment();
-        value.forEach(item => {
-          if (!item.nodeType == 1) {
-            item = item.html();
-          }
-          fragment.appendChild(item);
-        });
-        container.replaceWith(fragment);
-      }
+      switch (true) {
+        case value.nodeType == 1:
+          container.replaceWith(value);
+          break;
 
-      container.removeAttribute(`data-${id}`);
+        case typeof value === "function":
+          const eventType = entry.type;
+          container.addEventListener(eventType, value);
+          break;
+
+        case Array.isArray(value):
+          let fragment = document.createDocumentFragment();
+          value.forEach(item => {
+            if (!item.nodeType == 1) {
+              item = item.html();
+            }
+            fragment.appendChild(item);
+          });
+          container.replaceWith(fragment);
+          break;
+      }
     }
+
     return template;
   }
 
@@ -67,23 +78,32 @@ class HTML {
 
   //Make raw dom that has templates on places where values should be.
   // After templates are added, go to next phase and replace templates with true values
-  parseHTML(strings) {
-    let { values } = this;
+  parseHTML() {
+    let { values, strings } = this;
     let valuesMap = [];
+
     let rawDom = strings
       .map((string, index) => {
         const id = UUID();
-        //Skip last string
-        if (index + 1 != strings.length) {
+        const notLastString = index + 1 != strings.length;
+
+        if (notLastString) {
           let checkEvent = this.checkEvent(string);
           if (checkEvent) {
             string = `${string}" data-${id}="`;
-            valuesMap.push({ id, value: values[index], type: checkEvent });
+            valuesMap.push({
+              id,
+              value: values[index],
+              type: checkEvent
+            });
           } else {
             if (typeof values[index] == "string") {
               string = `${string} ${values[index]}`;
             } else {
-              valuesMap.push({ id, value: values[index] });
+              valuesMap.push({
+                id,
+                value: values[index]
+              });
               string = `${string} <template data-${id}=""> </template>`;
             }
           }
@@ -92,11 +112,16 @@ class HTML {
       })
       .reduce((prev, current) => prev + current)
       .html();
-    //Replace the templates inside
+
     let domWithValues = this.replaceTemplatesWithValues(rawDom, valuesMap);
+    domWithValues = this.attachFunctionsToDom(domWithValues);
+    return domWithValues;
+  }
 
-
-    return domWithValues
+  attachFunctionsToDom(dom) {
+    dom.render = this.render;
+    dom.update = this.update.bind(this);
+    return dom;
   }
 }
 

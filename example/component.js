@@ -35,7 +35,7 @@ class Component extends HTMLElement {
                           <rect width="80" height="19" y="20"></rect>
                           <text x="85" y="28" dy=".35em">8 bananas</text>
                         </g>
-                        ${apples.dom}
+                        ${apples}
                         <g class="bar">
                           <rect width="150" height="19" y="40"></rect>
                           <text x="150" y="48" dy=".35em">15 kiwis</text>
@@ -52,7 +52,7 @@ class Component extends HTMLElement {
                             <div class="element">${randomValue}</div>
                             <input type="text" placeholder="${randomValue}" />
                             <input type="range" oninput="${this.rangeInput}" />
-                            ${innerContainer.dom}
+                            ${innerContainer}
                          </section>`;
 
     svg.render(this);
