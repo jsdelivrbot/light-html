@@ -2,7 +2,7 @@ import {SVG_TAGS} from "./constants.js";
 
 {
   String.prototype.html = function() {
-    const svgCheck = SVG_TAGS.map(tag => this.search(`<${tag}`)).filter(output => output > -1).length > 0 ? true : false;
+    const svgCheck = SVG_TAGS.find((tag) => this.search(`<${tag}`) > -1);
     const parserType = svgCheck ? "image/svg+xml" : "text/html";
 
     let parser = new DOMParser();

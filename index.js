@@ -61,18 +61,8 @@ class HTML {
 
   //Check if string contains click event, or default value.
   checkEvent(string) {
-    let checkForEvents = eventsList
-      .map(event => {
-        let result = string.search(event);
-        if (result > 0) {
-          return event;
-        } else {
-          return null;
-        }
-      })
-      .filter(result => result)[0];
-
-    return checkForEvents ? checkForEvents : false;
+    let finding = eventsList.find((event) => string.search(event) > 0);
+    return finding;
   }
 
   //Make raw dom that has templates on places where values should be.

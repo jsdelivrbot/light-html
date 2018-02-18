@@ -44,13 +44,13 @@ class Component extends HTMLElement {
 
     let values = ["data1", "data2", "data3"];
     let innerContainer = html`<div id="inner">
-                                ${values.map((value) => {return `<span>${value}</span>`})}
+                                ${values.map((value) =>  `<span>${value}</span>`)}
                               </div>`;
 
     const randomValue = "test";
     let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
                             <div class="element">${randomValue}</div>
-                            <input type="text" placeholder="${randomValue}" />
+                            <input type="text" value="${randomValue}" />
                             <input type="range" oninput="${this.rangeInput}" />
                             ${innerContainer}
                          </section>`;
