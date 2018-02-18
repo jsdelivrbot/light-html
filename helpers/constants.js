@@ -15,7 +15,7 @@ export const eventsList = [
     "onkeyup",
     "onload"
   ],
-  defaultPlaceholders = [
+  attributesList = [
     "placeholder",
     "value",
     "x1",
