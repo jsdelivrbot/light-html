@@ -1,14 +1,14 @@
 export const eventsList = [
-  "click",
-  "dblclick",
-  "mousedown",
-  "mouseenter",
-  "mouseleave",
-  "mousemove",
-  "mouseover",
-  "mouseout",
-  "mouseup",
-  "input"
+  "onclick",
+  "ondblclick",
+  "onmousedown",
+  "onmouseenter",
+  "onmouseleave",
+  "onmousemove",
+  "onmouseover",
+  "onmouseout",
+  "onmouseup",
+  "oninput"
 ],
  SVG_TAGS = [
   'svg', 'altGlyph', 'altGlyphDef', 'altGlyphItem', 'animate', 'animateColor',

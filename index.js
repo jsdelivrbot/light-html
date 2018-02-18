@@ -1,5 +1,5 @@
-import { UUID } from "./helpers/math.js";
-import { eventsList } from "./helpers/constants.js";
+import {UUID} from "./helpers/math.js";
+import {eventsList} from "./helpers/constants.js";
 import "./helpers/parser.js";
 
 class HTML {
@@ -8,7 +8,7 @@ class HTML {
     this.strings = strings;
     this.dom = this.parseHTML();
     this.render = this.render.bind(this);
-    this.update = this.update.bind(this);
+    this.update = this.render.bind(this);
     return this.dom;
   }
 
@@ -18,7 +18,7 @@ class HTML {
   }
 
   update() {
-    console.log(this);
+    console.log(this.values);
   }
 
   //Remove dom from the website
@@ -33,15 +33,14 @@ class HTML {
         value = entry.value;
 
       let container = template.parentNode.querySelector(`*[data-${id}]`);
-
       switch (true) {
         case value.nodeType == 1:
           container.replaceWith(value);
           break;
 
-        case typeof value === "function":
-          const eventType = entry.type;
-          container.addEventListener(eventType, value);
+        case typeof entry.event == "string":
+          const eventType = entry.event;
+          container[eventType] = value;
           break;
 
         case Array.isArray(value):
@@ -79,7 +78,10 @@ class HTML {
   //Make raw dom that has templates on places where values should be.
   // After templates are added, go to next phase and replace templates with true values
   parseHTML() {
-    let { values, strings } = this;
+    let {
+      values,
+      strings
+    } = this;
     let valuesMap = [];
 
     let rawDom = strings
@@ -94,7 +96,7 @@ class HTML {
             valuesMap.push({
               id,
               value: values[index],
-              type: checkEvent
+              event: checkEvent
             });
           } else {
             if (typeof values[index] == "string") {
@@ -114,14 +116,13 @@ class HTML {
       .html();
 
     let domWithValues = this.replaceTemplatesWithValues(rawDom, valuesMap);
-    domWithValues = this.attachFunctionsToDom(domWithValues);
+    this.attachFunctionsToDom(domWithValues);
     return domWithValues;
   }
 
   attachFunctionsToDom(dom) {
     dom.render = this.render;
-    dom.update = this.update.bind(this);
-    return dom;
+    dom.update = this.update;
   }
 }
 
