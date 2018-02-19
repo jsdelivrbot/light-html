@@ -6,8 +6,6 @@ class ELEMENT {
     this.strings = strings;
     this.type = type;
     this.dom = this.parseHTML();
-    this.render = this.render.bind(this);
-    this.update = this.update.bind(this);
     return this.dom;
   }
 
@@ -16,8 +14,8 @@ class ELEMENT {
     container.appendChild(this);
   }
 
-  update() {
-    console.log(this.values);
+  update(dom) {
+    this.dom.replaceWith(dom);
   }
 
   //Remove dom from the website
@@ -35,7 +33,7 @@ class ELEMENT {
 
   attachFunctionsToDom(dom) {
     dom.render = this.render;
-    dom.update = this.update;
+    dom.update = this.update.bind(this);
   }
 }
 
