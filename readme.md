@@ -43,25 +43,31 @@ const svg = html`<svg xmlns="http://www.w3.org/2000/svg" class="chart" width="42
                       <rect width="80" height="19" y="20"></rect>
                       <text x="85" y="28" dy=".35em">8 bananas</text>
                     </g>
-                    ${apples.dom}
+                    ${apples}
                     <g class="bar">
                       <rect width="150" height="19" y="40"></rect>
                       <text x="150" y="48" dy=".35em">15 kiwis</text>
                     </g>
                   </svg>`;
 
-let values = ["data1", "data2", "data3"];
-let innerContainer = html`
-                          <div id="inner">
-                            ${values.map((value) => {return `<span>${value}</span>`})}
-                          </div>`;
+let valuesData = ["data1", "data2", "data3"];
+let valuesData2 = ["sadas", "xcvxc", "dasdasda"];
+
+let createElement = (values) => HTML`<div id="inner">
+                                        ${values.map((value) =>  `<span>${value}</span>`)}
+                                      </div>`;
+
+let data = createElement(valuesData);
 
 const randomValue = "test";
 let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
                         <div class="element">${randomValue}</div>
                         <input type="text" value="${randomValue}" > </input>
-                        ${innerContainer.dom}
+                        ${data}
                     </section>`;
+setTimeout(() => {
+  data.update(createElement(valuesData2))
+}, 2000)
 
 svg.render(this);
 container.render(this);                 

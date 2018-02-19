@@ -66,7 +66,10 @@ class Component extends HTMLElement {
                             ${data}
                          </section>`;
 
-    data.update(createElement(valuesData2));
+   setTimeout(() => {
+     data.update(createElement(valuesData2))
+   }, 2000);
+   
     svg.render(this);
     container.render(this);
   }
