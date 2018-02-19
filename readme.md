@@ -18,7 +18,7 @@ __Register__
 Import directly
 
 ```js
-import html from "https://cdn.jsdelivr.net/gh/tonis2/light-html@latest/index.js"
+import html from "https://cdn.rawgit.com/tonis2/light-html/master/index.js"
 ```
 
 or with compiling
