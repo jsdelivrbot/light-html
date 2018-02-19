@@ -53,10 +53,10 @@ class Component extends HTMLElement {
     let valuesData = ["data1", "data2", "data3"];
     let valuesData2 = ["sadas", "xcvxc", "dasdasda"];
 
-    let innerContainer = (values) => HTML`<div id="inner">
+    let createElement = (values) => HTML`<div id="inner">
                                             ${values.map((value) =>  `<span>${value}</span>`)}
                                           </div>`;
-    let data = innerContainer(valuesData);
+    let data = createElement(valuesData);
 
     const randomValue = "test";
     let container = HTML`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
@@ -66,7 +66,7 @@ class Component extends HTMLElement {
                             ${data}
                          </section>`;
 
-    data.update(innerContainer(valuesData2));
+    data.update(createElement(valuesData2));
     svg.render(this);
     container.render(this);
   }
