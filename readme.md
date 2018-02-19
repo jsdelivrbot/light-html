@@ -18,25 +18,25 @@ __Register__
 Import directly
 
 ```js
-import html from "https://cdn.rawgit.com/tonis2/light-html/master/index.js"
+import {HTML} from "https://cdn.rawgit.com/tonis2/light-html/master/index.js"
 ```
 
 or with compiling
 
 ```js
-import html from "light-html"
+import {HTML} from "light-html"
 
 ```
 
 __Example__
 
 ```js
-const apples = html`<g xmlns="http://www.w3.org/2000/svg" class="bar">
+const apples = SVG`<g xmlns="http://www.w3.org/2000/svg" class="bar">
                       <rect width="40" height="19"></rect>
                       <text x="45" y="9.5" dy=".35em">4 apples</text>
                     </g>`;
 
-const svg = html`<svg xmlns="http://www.w3.org/2000/svg" class="chart" width="420" height="150" aria-labelledby="title desc" role="img">
+const svg = SVG`<svg xmlns="http://www.w3.org/2000/svg" class="chart" width="420" height="150" aria-labelledby="title desc" role="img">
                     <title id="title">A bar chart showing information</title>
                     <desc id="desc">4 apples; 8 bananas; 15 kiwis; 16 oranges; 23 lemons</desc>
                     <g class="bar">
@@ -60,7 +60,7 @@ let createElement = (values) => HTML`<div id="inner">
 let data = createElement(valuesData);
 
 const randomValue = "test";
-let container = html`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
+let container = HTML`<section onclick="${this.log}" onmouseover="${this.mouseOver}" id="container">
                         <div class="element">${randomValue}</div>
                         <input type="text" value="${randomValue}" > </input>
                         ${data}
