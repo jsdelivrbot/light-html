@@ -37,15 +37,19 @@ class ELEMENT {
   }
 }
 
-
-export function HTML(strings, ...values) {
+export const HTML = (strings, ...values) => {
   let valuesArray = [...values];
   const type = "HTML";
   return new ELEMENT(strings, valuesArray, type);
-}
+};
 
-export function SVG(strings, ...values) {
+export const SVG = (strings, ...values) => {
   let valuesArray = [...values];
   const type = "SVG";
   return new ELEMENT(strings, valuesArray, type);
+};
+
+if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
+  window.HTML = HTML;
+  window.SVG = SVG;
 }
