@@ -49,7 +49,3 @@ export const SVG = (strings, ...values) => {
   return new ELEMENT(strings, valuesArray, type);
 };
 
-if (typeof module !== "undefined" && typeof module.exports !== "undefined") {
-  window.HTML = HTML;
-  window.SVG = SVG;
-}
