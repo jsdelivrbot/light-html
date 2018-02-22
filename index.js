@@ -50,3 +50,7 @@ export const SVG = (strings, ...values) => {
   const type = "SVG";
   return new ELEMENT(strings, valuesArray, type);
 };
+<<<<<<< HEAD
+=======
+
+>>>>>>> d7c4e00d9b3798652ca1543823571b3d64b4f335
