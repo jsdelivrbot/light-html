@@ -49,7 +49,7 @@ class Parser {
           string = `${string}${value}`;
           return string;
         } else {
-          if(value) {
+          if (value) {
             string = this.addTemplate(string, id);
             this.valuesMap.push({
               id,
@@ -94,7 +94,6 @@ class Parser {
           break;
       }
     }
-
     return template;
   }
 
