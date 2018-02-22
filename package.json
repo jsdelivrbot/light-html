@@ -1,6 +1,6 @@
 {
   "name": "light-html",
-  "version": "1.0.0",
+  "version": "2.0.5",
   "description": "light dom creation library",
   "main": "build/bundle.js",
   "directories": {

@@ -14,12 +14,4 @@ export const eventsList = [
     "onkeypress",
     "onkeyup",
     "onload"
-  ],
-  attributesList = [
-    "placeholder",
-    "value",
-    "x1",
-    "x2",
-    "y1",
-    "y2"
   ];
