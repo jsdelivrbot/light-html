@@ -1,5 +1,5 @@
-import { checkIfContains } from "./searchModule.js";
-import { UUID } from "../helpers/math.js";
+import {checkIfContains} from "./searchModule.js";
+import {UUID} from "../helpers/math.js";
 
 String.prototype.html = function() {
   let parser = new DOMParser();
@@ -20,59 +20,45 @@ class Parser {
   }
 
   addId(string, id) {
-    return `${string}" data-${id}="`;
+    return `${string}" ${id} "`;
   }
 
   addTemplate(string, id) {
-    return `${string} <template data-${id}=""> </template>`;
+    return `${string} <template ${id}> </template>`;
   }
 
   createHTML(strings, values) {
     return strings
       .map((string, index) => {
         const id = UUID();
-        const notLastString = index + 1 != strings.length;
         const value = values[index];
 
-        if (notLastString) {
-          let event = checkIfContains("eventListeners", string);
-          if (event) {
-            string = this.addId(string, id);
+        let event = checkIfContains("eventListeners", string);
+        if (event) {
+          string = this.addId(string, id);
+          this.valuesMap.push({
+            id,
+            value: value,
+            param: event,
+            type: "eventListeners"
+          });
+          return string;
+        }
+
+        if (typeof value == "string" || typeof value == "number") {
+          string = `${string}${value}`;
+          return string;
+        } else {
+          if(value) {
+            string = this.addTemplate(string, id);
             this.valuesMap.push({
               id,
               value: value,
-              param: event,
-              type: "eventListeners"
+              type: typeof value
             });
-          } else {
-            if (typeof value == "string" || typeof value == "number") {
-              let attribute = checkIfContains("attributes", string);
-              if (attribute) {
-                string = this.addId(string, id);
-                this.valuesMap.push({
-                  id,
-                  value: value,
-                  param: attribute,
-                  type: "attribute"
-                });
-              } else {
-                string = this.addTemplate(string, id);
-                this.valuesMap.push({
-                  id,
-                  value: value,
-                  type: "value"
-                });
-              }
-            } else {
-              string = this.addTemplate(string, id);
-              this.valuesMap.push({
-                id,
-                value: value
-              });
-            }
           }
+          return string;
         }
-        return string;
       })
       .reduce((prev, current) => prev + current)
       .html();
@@ -84,17 +70,9 @@ class Parser {
         value = entry.value,
         type = entry.type;
 
-      let container = template.parentNode.querySelector(`*[data-${id}]`);
+      let container = template.parentNode.querySelector(`*[${id}]`);
 
       switch (true) {
-        case type == "value" || type == "attribute":
-          if (type == "value") {
-            container.parentNode.innerHTML = value;
-          } else if (type == "attribute") {
-            container.setAttribute(entry.param, entry.value);
-          }
-          break;
-
         case value.nodeType == 1:
           container.replaceWith(value);
           break;
@@ -116,6 +94,7 @@ class Parser {
           break;
       }
     }
+
     return template;
   }
 
