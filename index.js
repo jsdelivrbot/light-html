@@ -15,9 +15,9 @@ class ELEMENT {
   }
 
   update(dom) {
-    dom.render = this.render;
-    dom.update = this.update.bind(this);
+    this.attachFunctionsToDom(dom);
     this.dom.replaceWith(dom);
+    this.dom = dom;
   }
 
   //Remove dom from the website
@@ -50,4 +50,3 @@ export const SVG = (strings, ...values) => {
   const type = "SVG";
   return new ELEMENT(strings, valuesArray, type);
 };
-
