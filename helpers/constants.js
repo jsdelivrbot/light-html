@@ -1,6 +1,7 @@
 export const eventsList = [
     "onclick",
     "ondblclick",
+    "onchange",
     "onmousedown",
     "onmouseenter",
     "onmouseleave",
