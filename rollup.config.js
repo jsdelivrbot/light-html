@@ -1,12 +1,10 @@
-import uglify from 'rollup-plugin-uglify';
+import uglify from "rollup-plugin-uglify";
 
 export default {
-  input: './index.js',
-  plugins: [
-      uglify()
-  ],
+  input: "./index.js",
+  plugins: [uglify()],
   output: {
-    file: 'build/bundle.js',
-    format: 'cjs'
+    file: "build/bundle.js",
+    format: "es"
   }
 };
