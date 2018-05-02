@@ -73,4 +73,4 @@ class Component extends HTMLElement {
   }
 }
 
-customElements.define("test-html", Component);
+customElements.define("example-html", Component);

@@ -59,7 +59,7 @@ export const putValuesToCorrectPlaces = (template, values) => {
     switch (true) {
       case type == "eventListeners":
         const eventType = entry.param;
-        container[eventType] = value;
+        setTimeout(() => container[eventType] = value, 0);
         break;
 
       case value.nodeType == 1:
