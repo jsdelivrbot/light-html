@@ -14,5 +14,6 @@ export const eventsList = [
     "onkeydown",
     "onkeypress",
     "onkeyup",
-    "onload"
+    "onload",
+    "ondragstart"
   ];
