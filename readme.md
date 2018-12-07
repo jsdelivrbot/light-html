@@ -18,6 +18,6 @@ __Register__
 Import directly
 
 ```js
-import {HTML} from "https://cdn.rawgit.com/tonis2/light-html/master/index.js"
+import {HTML} from "https://cdn.jsdelivr.net/gh/tonis2/light-html/index.js"
 ```
 
